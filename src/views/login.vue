@@ -292,6 +292,7 @@ nextTick(() => {
 
 <style lang="scss" scoped>
 .loginwapper {
+  user-select: none;
   margin: 0;
   min-height: 100vh;
   background-color: #abc6f8;
