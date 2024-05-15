@@ -2,13 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  user-select: none;
   /*font-family: sans-serif;*/
 
-  line-height: 1.5em;
+  /* line-height: 1.5em; */
 
   font-size: 16px;
- 
+  /* 鼠标样式 */
+  text-decoration: none;
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='10px' height='10px'><circle cx='4' cy='4' r='4' fill='white' /></svg>")
+      4 4,
+    auto !important;
 }
 
 @font-face {
@@ -19,6 +23,7 @@
 
 body {
   font-family: "myFont", sans-serif;
+  overflow: hidden;
 }
 
 #nprogress .bar {
@@ -49,4 +54,3 @@ body {
   );
   border-radius: 1em;
 }
-

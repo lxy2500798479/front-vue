@@ -7,7 +7,9 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
+ 
   <div class="layout-wapper">
+
     <div class="sidebar">
       <SideBar />
     </div>
@@ -23,9 +25,11 @@
 </template>
 
 <script setup>
-import SideBar from '@/layout/components/SideBar/index.vue'
-import TopMenu from '@/layout/components/TopMenu/index.vue'
-import AppMain from '@/layout/AppMain.vue'
+import SideBar from "@/layout/components/SideBar/index.vue";
+import TopMenu from "@/layout/components/TopMenu/index.vue";
+import AppMain from "@/layout/AppMain.vue";
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -34,11 +38,13 @@ import AppMain from '@/layout/AppMain.vue'
   width: 100vw;
   height: 100vh;
   /* 确保使用视口高度 */
+
+
+
 }
 
 .sidebar {
   height: 100vh;
-
 }
 
 .main {

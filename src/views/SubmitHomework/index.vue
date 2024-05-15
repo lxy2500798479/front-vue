@@ -1,11 +1,3 @@
-<!--
- * @Author: 星忆 2500798479@qq.com
- * @Date: 2024-04-14 01:19:30
- * @LastEditors: 星忆 2500798479@qq.com
- * @LastEditTime: 2024-04-27 10:52:22
- * @FilePath: \up-cloud-front\src\views\SubmitHomework\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <el-row style="height: 100%; overflow-y: auto" :gutter="20">
     <div class="submitcontinaer">
@@ -34,7 +26,7 @@
             <el-collapse-item class="homelistitem">
               <template #title>
                 <span v-if="item.title.length >= 15">{{
-                  item.title.substring(0, 15) + '...'
+                  item.title.substring(0, 15) + "..."
                 }}</span>
 
                 <span v-else>{{ item.title }}</span>
@@ -52,7 +44,25 @@
                   />
                   <span>{{ item.fileName }}</span>
                 </div>
-                <el-button @click="downloadFile">下载</el-button>
+                <div class="right-content">
+                  
+                  <el-button v-if="!isDownload" type="primary" @click="handleDownload">下载</el-button>
+                  <div v-else>
+                    <el-progress
+                    
+                   
+                      :percentage="jindu"
+                      :duration="1"
+                     
+                      style="margin-bottom: 10px"
+                    >
+                    </el-progress>
+                    <el-button type="warning" @click="cancleDownload">暂停</el-button>
+                    <el-button type="danger">取消</el-button>
+                  </div>
+                </div>
+
+                
               </div>
 
               <div class="author">
@@ -72,23 +82,76 @@
 </template>
 
 <script setup>
-import dayjs from 'dayjs'
-import { findStudentHomework,downloadFile } from '@/api/student'
-import { useUserStore } from '@/store/user'
+import dayjs from "dayjs";
+import { findStudentHomework, downloadFile,stopDownloadFile } from "@/api/student";
+import { useUserStore } from "@/store/user";
+import { ref } from "vue";
 
-const { user } = useUserStore()
+const { user } = useUserStore();
 
-let homeworklist = ref([])
+let homeworklist = ref([]);
+
+let isDownload = ref(false);
+let jindu = ref(0);
 
 onMounted(async () => {
-  const res = await findStudentHomework(user.classId)
-  homeworklist.value = res.data
+  const res = await findStudentHomework(user.classId);
+  homeworklist.value = res.data;
   homeworklist.value.forEach((item) => {
-    item.dueDate = dayjs(item.dueDate).format('YYYY-MM-DD HH:mm:ss')
-  })
-  console.log(homeworklist.value)
-})
+    item.dueDate = dayjs(item.dueDate).format("YYYY-MM-DD HH:mm:ss");
+  });
+  // console.log(homeworklist.value);
+});
 
+const handleDownload = async () => {
+  isDownload.value = true;
+
+  const onDownloadProgress = (progressEvent) => {
+    console.log(progressEvent);
+    const { loaded, total } = progressEvent;
+    const progress = Math.round((loaded * 100) / total);
+    jindu.value = progress;
+    // 这里可以根据需要更新下载进度，例如更新 UI
+    // console.log(`Download Progress: ${progress}%`);
+    // return progress;
+  };
+
+  try {
+    const res = await downloadFile({ onDownloadProgress });
+    console.log(res);
+    const blob = new Blob([res.data], { type: "application/octet-stream" });
+
+    let fileName = "yourDownloadFile";
+
+    if (res.headers["content-disposition"]) {
+      fileName = window.decodeURIComponent(
+        res.headers["content-disposition"].split("filename=")[1]
+      );
+      fileName = fileName.split('"')[1];
+    }
+
+    if (window.navigator.msSaveOrOpenBlob) {
+      navigator.msSaveBlob(blob, fileName);
+    } else {
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.style.display = "none";
+      link.download = fileName;
+      link.click();
+      window.URL.revokeObjectURL(link.href);
+    }
+  } catch (error) {
+    console.error("Download error:", error);
+  }
+
+  isDownload.value = false;
+};
+
+
+const cancleDownload=()=>{
+  stopDownloadFile()
+
+}
 
 </script>
 
@@ -152,7 +215,7 @@ onMounted(async () => {
         :deep(.el-collapse-item__header) {
           border: none;
           position: relative;
-          font-family: 'myFont', sans-serif;
+          font-family: "myFont", sans-serif;
 
           padding-left: 20px;
           height: 80px;
