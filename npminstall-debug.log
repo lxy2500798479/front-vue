@@ -1,30 +1,23 @@
 {
-  root: 'C:\\Users\\Administrator\\Desktop\\Big\\homework\\up-cloud-front',
+  root: 'C:\\Users\\Administrator\\Desktop\\SourceFiles\\Big\\homework\\up-cloud-front',
   registry: 'https://registry.npmmirror.com',
-  pkgs: [
-    {
-      name: 'dayjs',
-      version: 'latest',
-      type: 'tag',
-      alias: undefined,
-      arg: [Result]
-    }
-  ],
+  pkgs: [],
   production: false,
   cacheStrict: false,
   cacheDir: 'C:\\Users\\Administrator\\.npminstall_tarball',
   env: {
     npm_config_registry: 'https://registry.npmmirror.com',
-    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\Administrator\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","dayjs"],"original":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\Administrator\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com","dayjs"]}',
-    npm_config_user_agent: 'npminstall/7.11.1 npm/? node/v16.20.2 win32 x64',
+    npm_config_argv: '{"remain":[],"cooked":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\Administrator\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com"],"original":["--fix-bug-versions","--china","--userconfig=C:\\\\Users\\\\Administrator\\\\.cnpmrc","--disturl=https://cdn.npmmirror.com/binaries/node","--registry=https://registry.npmmirror.com"]}',
+    npm_config_user_agent: 'npminstall/7.12.0 npm/? node/v18.20.1 win32 x64',
     npm_config_cache: 'C:\\Users\\Administrator\\.npminstall_tarball',
     NODE: 'C:\\Program Files\\nodejs\\node.exe',
     npm_node_execpath: 'C:\\Program Files\\nodejs\\node.exe',
-    npm_execpath: 'C:\\Users\\Administrator\\AppData\\Roaming\\nvm\\v16.20.2\\node_modules\\cnpm\\node_modules\\npminstall\\bin\\install.js',
+    npm_execpath: 'C:\\Users\\Administrator\\AppData\\Roaming\\nvm\\v18.20.1\\node_modules\\cnpm\\node_modules\\npminstall\\bin\\install.js',
     npm_config_userconfig: 'C:\\Users\\Administrator\\.cnpmrc',
     npm_config_disturl: 'https://cdn.npmmirror.com/binaries/node',
     npm_config_r: 'https://registry.npmmirror.com',
     COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
+    EDGEDRIVER_CDNURL: 'https://npmmirror.com/mirrors/edgedriver',
     NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
     NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
     PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
@@ -49,12 +42,13 @@
     npm_config_sharp_binary_host: 'https://cdn.npmmirror.com/binaries/sharp',
     npm_config_sharp_libvips_binary_host: 'https://cdn.npmmirror.com/binaries/sharp-libvips',
     npm_config_robotjs_binary_host: 'https://cdn.npmmirror.com/binaries/robotjs',
-    npm_rootpath: 'C:\\Users\\Administrator\\Desktop\\Big\\homework\\up-cloud-front',
-    INIT_CWD: 'C:\\Users\\Administrator\\Desktop\\Big\\homework\\up-cloud-front'
+    npm_rootpath: 'C:\\Users\\Administrator\\Desktop\\SourceFiles\\Big\\homework\\up-cloud-front',
+    INIT_CWD: 'C:\\Users\\Administrator\\Desktop\\SourceFiles\\Big\\homework\\up-cloud-front'
   },
   binaryMirrors: {
     ENVS: {
       COREPACK_NPM_REGISTRY: 'https://registry.npmmirror.com',
+      EDGEDRIVER_CDNURL: 'https://npmmirror.com/mirrors/edgedriver',
       NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
       NVM_NODEJS_ORG_MIRROR: 'https://cdn.npmmirror.com/binaries/node',
       PHANTOMJS_CDNURL: 'https://cdn.npmmirror.com/binaries/phantomjs',
@@ -185,7 +179,7 @@
   disableFallbackStore: false,
   workspacesMap: Map(0) {},
   enableWorkspace: false,
-  workspaceRoot: 'C:\\Users\\Administrator\\Desktop\\Big\\homework\\up-cloud-front',
+  workspaceRoot: 'C:\\Users\\Administrator\\Desktop\\SourceFiles\\Big\\homework\\up-cloud-front',
   isWorkspaceRoot: true,
   isWorkspacePackage: false,
   offline: false,

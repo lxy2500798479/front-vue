@@ -15,13 +15,14 @@ import SparkMD5 from 'spark-md5';
 
 
 self.onmessage = async (event) => {
-  const startTime=Date.now();
+  // const startTime=Date.now();
   // console.log('event',event);
   const selectFile = event.data.file;
   const result = await computeMD5(selectFile);
   // console.log('result',result);
+
   self.postMessage(result);
-console.log('用时秒',(Date.now()-startTime)/1000);
+// console.log('用时秒',(Date.now()-startTime)/1000);
 };
 
 const computeMD5 = (file) => {
@@ -68,3 +69,5 @@ const combineHashes = (hashes) => {
   }
   return spark.end();
 };
+
+

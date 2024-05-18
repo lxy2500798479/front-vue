@@ -17,10 +17,10 @@ const findStudentHomework = (data) => {
 //   return service.post(`/homework/getFile`,{responseType: 'blob',headers: {'Content-Type': 'application/json'}})
 // }
 
-const downloadFile=({onDownloadProgress })=>{
- return service.get(`/homework/getFile`,{responseType: 'blob',headers:"Content-Type:application/json",onDownloadProgress: onDownloadProgress })
+// const downloadFile=({onDownloadProgress })=>{
+//  return service.get(`/homework/getFile`,{responseType: 'blob',headers:"Content-Type:application/json",onDownloadProgress: onDownloadProgress })
 
-}
+// }
 
 
 const stopDownloadFile=()=>{
@@ -28,4 +28,4 @@ const stopDownloadFile=()=>{
 }
 
 
-export { findStudentHomework ,downloadFile,stopDownloadFile}
+export { findStudentHomework ,stopDownloadFile}

@@ -13,7 +13,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { codeInspectorPlugin } from 'code-inspector-plugin'
-
+import EnhanceLog from 'vite-plugin-enhance-log'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +26,11 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()],
+    }),
+    EnhanceLog({
+      // 配置项
+      // ...
+      preTip:"👇👇👇👇👇👇👇👇👇👇👇👇👇👇"
     }),
     // codeInspectorPlugin({
     //   bundler: 'vite',

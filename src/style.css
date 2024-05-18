@@ -22,7 +22,7 @@
 }
 
 body {
-  font-family: "myFont", sans-serif;
+  font-family: "myFont" !important ;
   overflow: hidden;
 }
 
