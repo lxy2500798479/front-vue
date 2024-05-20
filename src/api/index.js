@@ -37,7 +37,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
 
-    console.log(response);
+    // console.log(response);
 
   
 
@@ -68,7 +68,7 @@ service.interceptors.response.use(
       return
     }
    
-    console.log(error);
+    // console.log(error);
     done();
 
     toast("error", error, "error");

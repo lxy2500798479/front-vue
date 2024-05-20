@@ -17,6 +17,7 @@
     "echarts": "^5.5.0",
     "element-plus": "^2.7.3",
     "gsap": "^3.12.5",
+    "idb": "^8.0.0",
     "jinrishici": "^1.0.6",
     "js-cookie": "^3.0.5",
     "nplayer": "^1.0.15",
