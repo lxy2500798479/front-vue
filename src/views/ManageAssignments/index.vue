@@ -129,7 +129,7 @@ onMounted(async () => {
 
   console.log(homeworkList.value)
   loading.value = false
-  mount.value = true
+  // mount.value = true
 })
 </script>
 

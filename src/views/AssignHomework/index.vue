@@ -177,19 +177,34 @@ const checkAndUpload = (md5) => {
       if (res.data == null) {
         loadMD5.worker.terminate();
 
-        let fileSp = upfile.value.name.split('.');
-        let fileName =
-          fileSp.length > 1
-            ? `${fileSp[0]}_${md5}.${fileSp[1]}`
-            : `${fileSp[0]}_${md5}`;
+        // let fileSp = upfile.value.name.split('.');
+        // let fileName =
+        //   fileSp.length > 1
+        //     ? `${fileSp[0]}_${md5}.${fileSp[fileSp.length-1]}`
+        //     : `${fileSp[0]}_${md5}`;
 
+    
+        let fileName = upfile.value.name;
+        let dotIndex = fileName.lastIndexOf('.'); // 找到最后一个点的位置
+        let fileNameWithoutExt = dotIndex !== -1 ? fileName.substring(0, dotIndex) : fileName;
+        let fileExt = dotIndex !== -1 ? fileName.substring(dotIndex + 1) : '';
+
+        let finalFileName =
+          fileExt
+            ? `${fileNameWithoutExt}_${md5}.${fileExt}`
+            : `${fileNameWithoutExt}_${md5}`;
+
+        // URL编码文件名
+        let encodedFileName = encodeURIComponent(finalFileName);
         let fileChunks = createFileChunk(upfile.value);
+        console.log(encodedFileName);
         let data = {
-          fileName,
+          fileName:encodedFileName,
           partSize: fileChunks.length,
           contentType: upfile.value.type,
         };
 
+        
         getPartUrl(data).then((res) => {
           console.log(res);
           fileUploadId.value = res.data.uploadId;
@@ -205,7 +220,7 @@ const checkAndUpload = (md5) => {
           });
           uploadChunkBase(chunklist).then((res) => {
             let par = {
-              fileName: fileName,
+              fileName: encodedFileName,
               uploadId: fileUploadId.value,
             };
             mergePart(par).then((res) => {

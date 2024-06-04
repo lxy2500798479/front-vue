@@ -9,7 +9,8 @@
           <el-tab-pane label="已截至" name="4"></el-tab-pane>
         </el-tabs>
         <el-collapse class="collapsecontainer" accordion>
-          <el-progress :text-inside="true" :stroke-width="20" :percentage="downloadState.progress" status="exception" style="margin-bottom: 20px">
+          <el-progress :text-inside="true" :stroke-width="20" :percentage="downloadState.progress" status="exception"
+            style="margin-bottom: 20px">
             <span>作业完成度</span>
           </el-progress>
           <el-card shadow="hover" v-for="(item, index) in homeworklist" :key="index" class="cardcontainer">
@@ -27,10 +28,13 @@
                   <span>{{ item.fileName }}</span>
                 </div>
                 <div class="right-content">
-                  <el-button v-if="!downloadState.isDownloading" type="primary" @click="handleDownload(item)">下载</el-button>
+                  <el-button v-if="!downloadState.isDownloading" type="primary"
+                    @click="handleDownload(item)">下载</el-button>
                   <div v-else>
-                    <el-progress :percentage="downloadState.progress" :duration="1" style="margin-bottom: 10px"></el-progress>
-                    <el-button type="warning" @click="togglePauseResume">{{ downloadState.isPaused ? '继续' : '暂停' }}</el-button>
+                    <el-progress :percentage="downloadState.progress" :duration="1"
+                      style="margin-bottom: 10px"></el-progress>
+                    <el-button type="warning" @click="togglePauseResume">{{ downloadState.isPaused ? '继续' : '暂停'
+                      }}</el-button>
                     <el-button type="danger" @click="cancelDownload">取消</el-button>
                   </div>
                 </div>
@@ -44,7 +48,21 @@
         </el-collapse>
       </el-col>
       <el-col :span="8">
-        <div class="upcontainer">提交作业</div>
+        <div class="upcontainer">
+          <span>下面提交👇</span>
+
+          <el-select filterable placeholder="选择作业" :visible-change="sb" :fit-input-width="true">
+
+            <el-option style="height: 500px;width: 100%;" :value="data">
+
+              <template #default>
+                <el-tree :data="data" :props="a" style="width: 100%;"></el-tree>
+
+              </template>
+            </el-option>
+
+          </el-select>
+        </div>
       </el-col>
     </div>
   </el-row>
@@ -58,30 +76,113 @@ import { findStudentHomework } from "@/api/student";
 import { useUserStore } from "@/store/user";
 const { user } = useUserStore();
 
-// const file_path= ref("@/assets/images/icons/Excel.png");
-
-let str="Excel";
-
-const getImageUrl=(name)=>{
-
-
-  let parts=name.split(".");
-  let filename=parts[0];
-
-  if(parts.length>1){
-    const extension=parts[parts.length-1];
-    switch(extension){
-      case "rar":
-        filename="yasuobao"
-        break
-      case 'png','jpg','jpeg','gif':
-        filename="images"
-        break
-    }
-  }
-
-  return new URL("../../assets/images/icons/"+filename+".png",import.meta.url).href
+const data = [
+  {
+    label: 'Level one 1',
+    children: [
+      {
+        label: 'Level two 1-1',
+        children: [
+          {
+            label: 'Level three 1-1-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 2',
+    children: [
+      {
+        label: 'Level two 2-1',
+        children: [
+          {
+            label: 'Level three 2-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 2-2',
+        children: [
+          {
+            label: 'Level three 2-2-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Level one 3',
+    children: [
+      {
+        label: 'Level two 3-1',
+        children: [
+          {
+            label: 'Level three 3-1-1',
+          },
+        ],
+      },
+      {
+        label: 'Level two 3-2',
+        children: [
+          {
+            label: 'Level three 3-2-1',
+          },
+        ],
+      },
+    ],
+  },
+]
+const a = {
+  children: 'children',
+  label: 'label',
 }
+
+
+const sb = (e) => {
+  console.log(e);
+}
+
+const getImageUrl = (name) => {
+  const extensionMap = {
+    rar: "yasuobao",
+    png: "images",
+    jpg: "images",
+    jpeg: "images",
+    gif: "images",
+    webp: "images",
+    docx: "docx",
+    doc: "docx",
+    xlsx: "xls",
+    xls: "xls",
+    pdf: "pdf",
+    ppt: "ppt",
+    pptx: "ppt",
+    mp4: "video",
+    avi: "video",
+    mpeg: "video",
+    mpg: "video",
+    mov: "video",
+    wmv: "video",
+    flv: "video",
+    mkv: "video",
+    webm: "video",
+    mp3: "music",
+    wav: "music",
+    ogg: "music",
+    aac: "music",
+    flac: "music",
+    m4a: "music",
+    wma: "music",
+    txt: "txt"
+  };
+
+  const parts = name.split(".");
+  const extension = parts.length > 1 ? parts.pop() : "";
+  const filename = extensionMap[extension] || "unknown";
+
+  return new URL(`../../assets/images/icons/${filename}.png`, import.meta.url).href;
+};
 
 let homeworklist = ref([]);
 const { downloadState, handleDownload, togglePauseResume, cancelDownload } = useDownload();
@@ -94,7 +195,31 @@ const loadHomework = async () => {
   homeworklist.value.forEach((item) => {
     item.dueDate = dayjs(item.dueDate).format("YYYY-MM-DD HH:mm:ss");
   });
+  categorizeHomework();
 };
+
+
+
+const categorizeHomework = () => {
+  const categorized = {};
+  // homeworklist.value.forEach((item) => {
+  //   if (!categorized[item.courseName]) {
+  //     categorized[item.courseName] = [];
+  //   }
+  //   categorized[item.courseName].push(item);
+  // });
+
+  homeworklist.value.forEach((item) => {
+    if (!categorized[item.courseName]) {
+      categorized[item.courseName] = [];
+    }
+    categorized[item.courseName].push(item);
+  });
+
+  console.log(categorized);
+
+}
+
 
 onMounted(async () => {
   downloadState.cancelTokenSource = axios.CancelToken.source();
@@ -193,6 +318,24 @@ onUnmounted(() => {
         }
       }
     }
+  }
+
+  .upcontainer {
+    text-align: center;
+
+
+
+    :deep(.el-select-dropdown__item) {
+      padding: 0;
+    }
+  }
+
+  :deep(.el-select-dropdown__item) {
+    padding: 0;
+  }
+
+  :deep(el-select-dropdown__item) {
+    padding: 0;
   }
 }
 </style>
