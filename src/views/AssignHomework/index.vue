@@ -48,7 +48,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button :loading="uploading" style="width: 100%" type="primary" @click="submitHomework"
+          <el-button :loading="uploading" style="width: 100%" :type="loadMD5.isLoading?'danger':'primary'" @click="submitHomework"
             :disabled="loadMD5.isLoading">发布</el-button>
           <!-- <el-button style="width: 100%" @click="isPaused = !isPaused">
             {{ isPaused ? "继续" : "暂停" }}
@@ -69,10 +69,10 @@ import { findClassesCourseByUserId, createHomework } from "@/api/teacher";
 import { checkExist, getPartUrl, mergePart, getPartInfo } from "@/api/file";
 import { toast } from "@/utils/message";
 import md5Worker from "@/utils/md5Worker.js?worker";
-import { reactive, ref } from "vue";
+
 
 import axios from "axios";
-import { ElMessage } from "element-plus";
+
 
 const { user } = useUserStore();
 
@@ -81,11 +81,7 @@ const uploading = ref(false);
 const fileRef = ref(null);
 const upfile = ref(null);
 
-// const isExistForm = reactive({
-//   md5: "",
-//   isExist: false,
-//   donwload_url: "",
-// });
+
 
 const fileUploadId = ref(null);
 const checkAll = ref(false);
@@ -154,34 +150,17 @@ const handleFileChange = async (file, fileList) => {
     loadMD5.worker = worker
     // console.log(worker);
 
-    // console.log(hash);
-
-    // workmd5(upfile.value).then((md5) => {
-    //   isExistForm.md5 = md5;
-    //   checkExist(isExistForm.md5).then((res) => {
-    //     if (res.data == null) {
-    //       isExistForm.isExist = false;
-    //     } else {
-    //       isExistForm.isExist = true;
-    //       isExistForm.donwload_url = res.data
-    //     }
-    //   });
-    // });
   }
 };
 
 const checkAndUpload = (md5) => {
   console.log(md5);
   return new Promise((resolve, reject) => {
-    checkExist(md5).then((res) => {
+    checkExist(md5,user.roles[0].roleName).then((res) => {
       if (res.data == null) {
         loadMD5.worker.terminate();
 
-        // let fileSp = upfile.value.name.split('.');
-        // let fileName =
-        //   fileSp.length > 1
-        //     ? `${fileSp[0]}_${md5}.${fileSp[fileSp.length-1]}`
-        //     : `${fileSp[0]}_${md5}`;
+ 
 
     
         let fileName = upfile.value.name;
@@ -195,7 +174,7 @@ const checkAndUpload = (md5) => {
             : `${fileNameWithoutExt}_${md5}`;
 
         // URL编码文件名
-        let encodedFileName = encodeURIComponent(finalFileName);
+        let encodedFileName = user.roles[0].description+"/"+finalFileName;
         let fileChunks = createFileChunk(upfile.value);
         console.log(encodedFileName);
         let data = {

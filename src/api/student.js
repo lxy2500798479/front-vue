@@ -13,6 +13,10 @@ const findStudentHomework = (data) => {
   return service.get(`/homework/studentHomework/classId=${data}`)
 }
 
+const submitHomework = (data) => {
+  return service.post(`/homework/submissionHomework`, data)
+}
+
 // const downloadFile=(teacherId,homeworkId)=>{
 //   return service.post(`/homework/getFile`,{responseType: 'blob',headers: {'Content-Type': 'application/json'}})
 // }
@@ -28,4 +32,4 @@ const stopDownloadFile=()=>{
 }
 
 
-export { findStudentHomework ,stopDownloadFile}
+export { findStudentHomework ,stopDownloadFile,submitHomework}

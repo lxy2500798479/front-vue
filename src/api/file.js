@@ -1,8 +1,8 @@
 import service from ".";
 
 
-const checkExist = (md5) => {
-    return service.get(`/homework/checkExistByMd5?md5=${md5}`);
+const checkExist = (md5,utype) => {
+    return service.get(`/homework/checkExistByMd5?md5=${md5}&Utype=${utype}`);
 }
 
 

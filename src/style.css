@@ -20,6 +20,9 @@
   src: url("@/assets/fonts/SmileySans.otf");
   font-display: swap;
 }
+html{
+  font-family: "myFont" !important;
+}
 
 body {
   font-family: "myFont" !important ;
